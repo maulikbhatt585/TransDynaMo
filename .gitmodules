@@ -1,0 +1,3 @@
+[submodule "Gymnasium"]
+	path = Gymnasium
+	url = https://github.com/Farama-Foundation/Gymnasium.git
