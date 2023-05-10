@@ -7,11 +7,11 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def generate_data(env, n_traj, traj_len):
     n_states = env.observation_space.shape[0]
-    n_actions = env.action_space.n
+    n_actions = env.action_space.shape[0]
     n = 0
     n_tot = 0
     traj_states = torch.zeros((n_traj, traj_len, n_states)).to(device)
-    traj_actions = torch.zeros((n_traj, traj_len)).to(device)
+    traj_actions = torch.zeros((n_traj, traj_len, n_actions)).to(device)
     traj_rewards = torch.zeros((n_traj, traj_len)).to(device)
 
     while n < n_traj:
@@ -22,7 +22,7 @@ def generate_data(env, n_traj, traj_len):
             action = env.action_space.sample()
             state_next, reward, terminated, truncated, info = env.step(action)
 
-            traj_actions[n, i] = action
+            traj_actions[n, i, :] = torch.tensor(action).to(device)
             traj_rewards[n, i] = reward
             traj_states[n, i, :] = state
 
@@ -39,13 +39,13 @@ def generate_data(env, n_traj, traj_len):
         	print("Number of trajectories generated:",n)
         	print("Number of total trajectories:",n_tot)
 
-    torch.save(traj_states, "data/acrobot_states.pt")
-    torch.save(traj_actions, "data/acrobot_actions.pt")
+    torch.save(traj_states, "data/pendulum_states.pt")
+    torch.save(traj_actions, "data/pendulum_actions.pt")
 
 def main():
-    env = gym.make("Acrobot-v1")
-    n_traj = int(1e6)
-    traj_len = 500
+    env = gym.make("HalfCheetah-v4")
+    n_traj = int(1e5)
+    traj_len = 200
 
     generate_data(env, n_traj, traj_len)
 
