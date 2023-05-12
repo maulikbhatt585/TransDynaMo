@@ -44,7 +44,7 @@ def generate_data(env, n_traj, traj_len):
 
 def main():
     env = gym.make("Acrobot-v1")
-    n_traj = int(1e6)
+    n_traj = int(1e5)
     traj_len = 500
 
     generate_data(env, n_traj, traj_len)
