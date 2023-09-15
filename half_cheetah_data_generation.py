@@ -39,8 +39,8 @@ def generate_data(env, n_traj, traj_len):
         	print("Number of trajectories generated:",n)
         	print("Number of total trajectories:",n_tot)
 
-    torch.save(traj_states, "data/pendulum_states.pt")
-    torch.save(traj_actions, "data/pendulum_actions.pt")
+    torch.save(traj_states, "data/half_cheetah_states.pt")
+    torch.save(traj_actions, "data/half_cheetah_actions.pt")
 
 def main():
     env = gym.make("HalfCheetah-v4")
